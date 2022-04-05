@@ -21,10 +21,10 @@ public:
 	void _init(int _dir,int typ_num,int _hp,int _atk){
 		memset(weapon,0,sizeof weapon),
 		dir=_dir, setnum(), setpos(), typ=typ_num, hp=_hp, atk=_atk; }
-	virtual void init(int _dir,int cur_lif){ cerr<<"you'll never see this sentence."<<endl; }
+	virtual void init(int _dir,int cur_lif){ cerr<<"This sentence should not be printed."<<endl; }
 	
 	static int gettot(int _dir){ return _dir==1?red_tot:blu_tot; }
-	virtual int getsthp() const{ cerr<<"you'll never see this sentence."<<endl; return 0; }
+	virtual int getsthp() const{ cerr<<"This sentence should not be printed."<<endl; return 0; }
 	int gettyp() const{ return typ; } int getnum() const{ return num; } int getpos() const{ return pos; }
 	int sum_weapon(){ return weapon[0]+weapon[1]+weapon[2]+weapon[3]; }
 
@@ -93,7 +93,7 @@ bool attack(warrior *p,warrior *q){ //p ---attack--> q
 		case 1: p->use_bomb(),q->hurt_bomb(p); break;
 		case 2: p->use_arrow_new(),q->hurt_arrow(p); break;
 		case 3: p->use_arrow_used(),q->hurt_arrow(p); break;
-		default: cerr<<"you'll never see this sentence."<<endl;
+		default: cerr<<"This sentence should not be printed."<<endl;
 	}
 	return true;
 }
@@ -114,13 +114,10 @@ void fight(warrior *red,warrior *blu){
 	if(red==NULL||blu==NULL) return;
 	int cur=red->pos%2==0;
 	red->q_init(), blu->q_init();
-	int __b=0;
 	while(!check_win(red,blu)){
 		if(cur) attack(blu,red);
 		else attack(red,blu); cur^=1;
 		if(check_draw(red,blu))break;
-		++__b;
-		if(__b>100)cerr<<red->weapon_q.size()<<' '<<blu->weapon_q.size()<<endl;
 	}
 	pr_time(40);
 	if(red->hp>0){
